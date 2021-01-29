@@ -29,6 +29,7 @@ def baixar_video():
     stream = video.streams.get_highest_resolution()
     stream.download()
     print(video.title)
+    move_mp4()
     
     
 
@@ -51,6 +52,23 @@ def baixar_video_playlist():
         except:
             print(str(tamanho), ": Oops! Video privado ou não permitido na sua região! ...")
             tamanho -= 1
+    
+            
+
+def move_mp4():
+    
+    cwd = os.getcwd()
+    mp4 = cwd+'/videos/'
+    musicas = os.listdir(cwd)
+    
+    for musica in musicas:
+        
+        if(musica[-4:] == ".mp4"):
+            musica_sprit = musica[0:-4]
+            print(musica)
+            shutil.move(musica, mp4 )
+    
+
 
 def converte_to_mp3():
     cwd = os.getcwd()
@@ -58,24 +76,37 @@ def converte_to_mp3():
     mp4 = cwd+'/videos/'
     musicas = os.listdir(cwd)
     tamanho = len(musicas)
-    print(cwd)
-    print(som)
-    print(mp4)
-    print(musicas)
-        
+       
     for musica in musicas:
         if(musica[-4:] == ".mp4"):
             musica_sprit = musica[0:-4]
             print( musica_sprit+".mp3")
-            
             video = VideoFileClip(os.path.join(musica))         
             video.audio.write_audiofile(os.path.join(som, musica_sprit+".mp3"))
-            shutil.move(musica, mp4 )
+            #shutil.move(musica, mp4 )
             tamanho -= 1
-            print(musica, video)
+            
         else:
             print(musica)
         
+def to_mp3():
+    cwd = os.getcwd()
+    som = cwd+'/mp3/'
+    mp4 = cwd+'/videos/'
+    musicas = os.listdir(cwd)
+    tamanho = len(musicas)
+       
+    for musica in musicas:
+        if(musica[-4:] == ".mp4"):
+            musica_sprit = musica[0:-4]
+            print( musica_sprit+".mp3")
+            video = VideoFileClip(os.path.join(musica))         
+            video.audio.write_audiofile(os.path.join(som, musica_sprit+".mp3"))
+            os.remove(musica)
+            tamanho -= 1
+            
+        else:
+            print(musica)
 
 op = 0
 while True: 
@@ -86,6 +117,7 @@ while True:
     elif (op == 1):
         baixar_video_playlist()
     elif(op == 2):
+        baixar_video_playlist()
         converte_to_mp3()
     
     elif (op == 3):
