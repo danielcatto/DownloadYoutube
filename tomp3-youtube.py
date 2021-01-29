@@ -116,9 +116,10 @@ while True:
         break
     elif (op == 1):
         baixar_video_playlist()
+        move()
     elif(op == 2):
         baixar_video_playlist()
-        converte_to_mp3()
+        to_mp3()
     
     elif (op == 3):
         baixar_video()
